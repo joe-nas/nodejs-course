@@ -33,13 +33,19 @@ const fs = require("fs");
 // webserver
 const http = require("http");
 
+const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
+const dataObj = JSON.parse(data);
+
 // create server with callback function that executes when a req hits the server and responding with res
 const server = http.createServer((req, res) => {
   const pathName = req.url;
   if (pathName === "/" || pathName === "/overview")
     res.end("This is the overview");
   else if (pathName === "/product") res.end("Hello from the product");
-  else {
+  else if (pathName === "/api") {
+    res.writeHead(200, { "Content-type": "application/json" });
+    res.end(data);
+  } else {
     // header must come before the response content - in this case end()
     res.writeHead(404, {
       "Content-type": "text/html",
