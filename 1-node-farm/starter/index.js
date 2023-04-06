@@ -35,11 +35,24 @@ const http = require("http");
 
 // create server with callback function that executes when a req hits the server and responding with res
 const server = http.createServer((req, res) => {
-  //   console.log(req);
-  res.end("Hello from the server");
+  const pathName = req.url;
+  if (pathName === "/" || pathName === "/overview")
+    res.end("This is the overview");
+  else if (pathName === "/product") res.end("Hello from the product");
+  else {
+    // header must come before the response content - in this case end()
+    res.writeHead(404, {
+      "Content-type": "text/html",
+      "my-own-header": "hello-world!",
+    });
+    res.end("<h1>Page not found</h1>");
+  }
 });
 
 // telling the server to listen to incoming requests on localhost:port
 server.listen(8000, "127.0.0.1", () => {
   console.log("listening to requests on port 8000");
 });
+
+// routing
+const url = require("url");
