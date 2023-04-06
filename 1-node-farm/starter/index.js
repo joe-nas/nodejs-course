@@ -15,17 +15,31 @@ const fs = require("fs");
 // console.log("file has been written");
 
 // async read and write
-fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
-  if (err) return console.error("Error");
-  fs.readFile(`./txt/${data1}.txt`, "utf-8", (err, data2) => {
-    console.log(data2);
-    fs.readFile(`./txt/append.txt`, "utf-8", (err, data3) => {
-      console.log(data3);
+// fs.readFile("./txt/start.txt", "utf-8", (err, data1) => {
+//   if (err) return console.error("Error");
+//   fs.readFile(`./txt/${data1}.txt`, "utf-8", (err, data2) => {
+//     console.log(data2);
+//     fs.readFile(`./txt/append.txt`, "utf-8", (err, data3) => {
+//       console.log(data3);
 
-      fs.writeFile("./txt/final.txt", `${data2}\n${data3}`, "utf-8", (err) => {
-        console.log("written data2 and data3");
-      });
-    });
-  });
+//       fs.writeFile("./txt/final.txt", `${data2}\n${data3}`, "utf-8", (err) => {
+//         console.log("written data2 and data3");
+//       });
+//     });
+//   });
+// });
+// console.log("will read file");
+
+// webserver
+const http = require("http");
+
+// create server with callback function that executes when a req hits the server and responding with res
+const server = http.createServer((req, res) => {
+  //   console.log(req);
+  res.end("Hello from the server");
 });
-console.log("will read file");
+
+// telling the server to listen to incoming requests on localhost:port
+server.listen(8000, "127.0.0.1", () => {
+  console.log("listening to requests on port 8000");
+});
