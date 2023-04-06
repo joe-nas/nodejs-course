@@ -36,15 +36,66 @@ const http = require("http");
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
 
+const replaceTemplate = (temp, product) => {
+  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
+  // .replace(/{%IMAGE%}/g, product.image)
+  // .replace(/{%FROM%}/g, product.from)
+  // .replace(/{%NUTRIENTS%}/g, product.nutrients)
+  // .replace(/{%QUANTITY%}/g, product.quantity)
+  // .replace(/{%DESCRIPTION%}/g, product.description)
+  // .replace(/{%PRICE%}/g, product.price)
+  // .replace(/{%ID%}/g, product.id);
+  output = output.replace(/{%IMAGE%}/g, product.image);
+  output = output.replace(/{%FROM%}/g, product.from);
+  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
+  output = output.replace(/{%QUANTITY%}/g, product.quantity);
+  output = output.replace(/{%DESCRIPTION%}/g, product.description);
+  output = output.replace(/{%PRICE%}/g, product.price);
+  output = output.replace(/{%ID%}/g, product.id);
+
+  if (!product.organic) {
+    output.replace(/{%NOTORGANIC%}/g, "not-organic");
+  }
+  return output;
+};
+
+const tempOverview = fs.readFileSync(
+  `${__dirname}/templates/template_overview.html`,
+  "utf-8"
+);
+const tempCard = fs.readFileSync(
+  `${__dirname}/templates/template_card.html`,
+  "utf-8"
+);
+const tempProduct = fs.readFileSync(
+  `${__dirname}/templates/template_product.html`,
+  "utf-8"
+);
+
 // create server with callback function that executes when a req hits the server and responding with res
 const server = http.createServer((req, res) => {
   const pathName = req.url;
-  if (pathName === "/" || pathName === "/overview")
-    res.end("This is the overview");
-  else if (pathName === "/product") res.end("Hello from the product");
-  else if (pathName === "/api") {
+
+  // Overview page
+  if (pathName === "/" || pathName === "/overview") {
+    res.writeHead(200, { "Content-type": "text/html" });
+
+    const cardsHtml = dataObj
+      .map((el) => replaceTemplate(tempCard, el))
+      .join("");
+
+    const output = tempOverview.replace("{%PRODUCT_CARDS%}", cardsHtml);
+    res.end(output);
+    // Product page
+  } else if (pathName === "/product") {
+    res.writeHead(200, { "Content-type": "text/html" });
+    res.end(tempProduct);
+    // res.end("Hello from the product")};
+    // api
+  } else if (pathName === "/api") {
     res.writeHead(200, { "Content-type": "application/json" });
     res.end(data);
+    // Not found
   } else {
     // header must come before the response content - in this case end()
     res.writeHead(404, {
