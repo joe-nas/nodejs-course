@@ -38,6 +38,7 @@ const dataObj = JSON.parse(data);
 
 const replaceTemplate = (temp, product) => {
   let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
+  //! REPLACE this monstrosity
   // .replace(/{%IMAGE%}/g, product.image)
   // .replace(/{%FROM%}/g, product.from)
   // .replace(/{%NUTRIENTS%}/g, product.nutrients)
