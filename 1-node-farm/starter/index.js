@@ -1,7 +1,13 @@
 // const hello = "hello world";
 // console.log(hello);
-
+//! core modules import
 const fs = require("fs");
+// webserver
+const http = require("http");
+// routing
+const url = require("url");
+
+const replaceTemplate = require("./modules/replaceTemplate.js");
 // const exercises = fs.open("/Users/affennacken/Coding/exercises.json");
 
 // fs.readFileSync("/Users/affennacken/Coding/exercises.json", );
@@ -30,35 +36,8 @@ const fs = require("fs");
 // });
 // console.log("will read file");
 
-// webserver
-const http = require("http");
-
 const data = fs.readFileSync(`${__dirname}/dev-data/data.json`, "utf-8");
 const dataObj = JSON.parse(data);
-
-const replaceTemplate = (temp, product) => {
-  let output = temp.replace(/{%PRODUCTNAME%}/g, product.productName);
-  //! REPLACE this monstrosity
-  // .replace(/{%IMAGE%}/g, product.image)
-  // .replace(/{%FROM%}/g, product.from)
-  // .replace(/{%NUTRIENTS%}/g, product.nutrients)
-  // .replace(/{%QUANTITY%}/g, product.quantity)
-  // .replace(/{%DESCRIPTION%}/g, product.description)
-  // .replace(/{%PRICE%}/g, product.price)
-  // .replace(/{%ID%}/g, product.id);
-  output = output.replace(/{%IMAGE%}/g, product.image);
-  output = output.replace(/{%FROM%}/g, product.from);
-  output = output.replace(/{%NUTRIENTS%}/g, product.nutrients);
-  output = output.replace(/{%QUANTITY%}/g, product.quantity);
-  output = output.replace(/{%DESCRIPTION%}/g, product.description);
-  output = output.replace(/{%PRICE%}/g, product.price);
-  output = output.replace(/{%ID%}/g, product.id);
-  if (!product.organic) {
-    output.replace(/{%NOTORGANIC%}/g, "not-organic");
-  }
-  // console.log(output);
-  return output;
-};
 
 const tempOverview = fs.readFileSync(
   `${__dirname}/templates/template_overview.html`,
@@ -113,6 +92,3 @@ const server = http.createServer((req, res) => {
 server.listen(8000, "127.0.0.1", () => {
   console.log("listening to requests on port 8000");
 });
-
-// routing
-const url = require("url");
