@@ -53,10 +53,10 @@ const replaceTemplate = (temp, product) => {
   output = output.replace(/{%DESCRIPTION%}/g, product.description);
   output = output.replace(/{%PRICE%}/g, product.price);
   output = output.replace(/{%ID%}/g, product.id);
-
   if (!product.organic) {
     output.replace(/{%NOTORGANIC%}/g, "not-organic");
   }
+  // console.log(output);
   return output;
 };
 
@@ -75,7 +75,7 @@ const tempProduct = fs.readFileSync(
 
 // create server with callback function that executes when a req hits the server and responding with res
 const server = http.createServer((req, res) => {
-  const pathName = req.url;
+  const { query, pathname: pathName } = url.parse(req.url, true);
 
   // Overview page
   if (pathName === "/" || pathName === "/overview") {
@@ -90,7 +90,9 @@ const server = http.createServer((req, res) => {
     // Product page
   } else if (pathName === "/product") {
     res.writeHead(200, { "Content-type": "text/html" });
-    res.end(tempProduct);
+    const product = dataObj[query.id];
+    const output = replaceTemplate(tempProduct, product);
+    res.end(output);
     // res.end("Hello from the product")};
     // api
   } else if (pathName === "/api") {
