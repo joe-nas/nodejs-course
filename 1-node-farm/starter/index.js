@@ -1,5 +1,3 @@
-// const hello = "hello world";
-// console.log(hello);
 //! core modules import
 const fs = require("fs");
 // webserver
@@ -7,6 +5,10 @@ const http = require("http");
 // routing
 const url = require("url");
 
+//! third party modules
+const slugify = require("./node_modules/slugify");
+
+//! project modules
 const replaceTemplate = require("./modules/replaceTemplate.js");
 // const exercises = fs.open("/Users/affennacken/Coding/exercises.json");
 
@@ -51,6 +53,9 @@ const tempProduct = fs.readFileSync(
   `${__dirname}/templates/template_product.html`,
   "utf-8"
 );
+
+const slugs = dataObj.map((obj) => slugify(obj.productName, { lower: true }));
+console.log(slugs);
 
 // create server with callback function that executes when a req hits the server and responding with res
 const server = http.createServer((req, res) => {
