@@ -262,3 +262,14 @@ But there are other standards for formatting data JSOPN:API, OData JSON Protocol
 - **Stateless RESTful API:** A;; state is handled **on the client**. Meaning each request must contain **all** the information necessary to process a certain request. The server should **not** have to remember previous requests.
 
 - Examples of state `loggedIn, currentPage`
+
+## Essence of Express Development: The request-response cycle
+
+1. On a request to the app server a request and response object is created
+2. From the initial request **middleware** can modify request and response objects until the response is sent (.send()).
+   - we used req.json() to get access to the request body on the req obj.
+   - in express "Everything is middleware" even routers.
+   - all middleware we use in the app is called the middleware stack.
+
+the request response cycle:
+`incoming request --> middleware(req,res) --> response`
