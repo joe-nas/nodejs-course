@@ -2,4 +2,6 @@
 ./*/*/node_modules/
 1-node-farm/starter/node_modules/
 1-node-farm/final/
+4-natours/starter/node_modules
+4-natours/final
 
