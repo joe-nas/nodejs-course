@@ -84,9 +84,9 @@ listens to events
 const server = http.createServer();
 // server on is a listener for the request event and has a callback function specified
 // server is an instance of the EventEmitter class
-server.on('request', (req, res) => {
-  console.log('Request received');
-  res.send('Request received');
+server.on("request", (req, res) => {
+  console.log("Request received");
+  res.send("Request received");
 });
 ```
 
@@ -167,3 +167,98 @@ streams are instances of the EventEmitter class and hence can emit and listen/ob
 
 5. caching
    - is only executed once and modules will be in cache
+
+# ExpressJS
+
+- minimal node.js framework, higher level of abstraction
+- complex routing, easier request/response handling
+- middleware
+- server side rendering
+- facilitates organization into MVC architecture
+
+## Application Programming Interfaces and RESTful API design
+
+There are many types of APIs.
+
+- Web APIs Database -> JSON data -> API -> browser, native mobile app, native windows
+- Node.js fs or http APIs
+- Browser's DOM js API
+- With OOP, when exposing public methods
+- ...
+
+### REpresential State Transfer REST
+
+1. Separate APO into logical **resources**
+
+- **Resource:** Object or representation of sth, which has data associated to it. Any information that can be **named** can be a resource. E.g. `tours, users, reviews`
+
+2. Expose structured. resource-based URLs
+
+- `https://www.natours.com/tours` URL
+- `/tours` the API endpoint
+- `/users`
+
+3. Use correct HTTP methods (verbs)
+
+- Use methods like `GET/POST/PUT` on these endpoints for different actions
+- use `GET /tours/` to get all tours
+- use e.g. `GET /tours/7` to get a particular tour. The identifier can be everything.
+- `GET` is for reading data
+- `POST` is for data creation, resource creation
+- `PUT/PATCH` updating resources. PUT the user is expected to send a whole object while with PATCH one expects only changed data
+- `DELETE` delete a recourse.
+- getToursByUser could be translated to `GET /users/3/tours`
+- deleteToursByUser `DELETE /users/3/tours/9`
+
+- These are the CRUD operation **Create, Read, Update, Delete**
+
+4. Send data as JSON (usually)
+
+```json
+{
+  "id": 5,
+  "tourName": "Bla Blub",
+  "rating": "4.9",
+  "guides": [
+    {
+      "name": "Steven Miller",
+      "role": "Lead Guide"
+    },
+    {
+      "name": "Lisa Brown",
+      "role": "Tour Guide"
+    }
+  ]
+}
+```
+
+Transform/Enveloping using JSend
+
+```json
+{
+  "status": "success",
+  "data": {
+    "id": 5,
+    "tourName": "Bla Blub",
+    "rating": "4.9",
+    "guides": [
+      {
+        "name": "Steven Miller",
+        "role": "Lead Guide"
+      },
+      {
+        "name": "Lisa Brown",
+        "role": "Tour Guide"
+      }
+    ]
+  }
+}
+```
+
+But there are other standards for formatting data JSOPN:API, OData JSON Protocol, ...
+
+5.  Be stateless
+
+- **Stateless RESTful API:** A;; state is handled **on the client**. Meaning each request must contain **all** the information necessary to process a certain request. The server should **not** have to remember previous requests.
+
+- Examples of state `loggedIn, currentPage`
