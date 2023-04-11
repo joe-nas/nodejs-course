@@ -273,3 +273,7 @@ But there are other standards for formatting data JSOPN:API, OData JSON Protocol
 
 the request response cycle:
 `incoming request --> middleware(req,res) --> response`
+
+## There is param middleware
+
+Param middleware runs is applied only to a specific route, e.g. `/:id`

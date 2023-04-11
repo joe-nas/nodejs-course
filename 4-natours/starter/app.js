@@ -12,8 +12,6 @@ app.use(morgan('dev'));
 app.use(express.json()); // adds the request body to request object, would be undefined otherwise
 // specify route and router in middleware.
 // Mounting the router, mounting a router on a route
-app.use('/api/v1/tours', tourRouter);
-app.use('/api/v1/users', userRouter);
 
 // own middleware: needs to positioned before route handler in order to being used
 app.use((req, res, next) => {
@@ -26,7 +24,8 @@ app.use((req, res, next) => {
   next();
 });
 
-//? 2. Route handlers
+app.use('/api/v1/tours', tourRouter);
+app.use('/api/v1/users', userRouter);
 
 //? 4. Start Server
 const port = 3000;
