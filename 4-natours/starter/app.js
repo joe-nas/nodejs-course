@@ -1,12 +1,11 @@
+const express = require('express');
+const morgan = require('morgan');
 const tourRouter = require('./routes/tourRoutes');
 const userRouter = require('./routes/userRoutes');
 
-const express = require('express');
-const morgan = require('morgan');
-
 const app = express();
 
-//? 1. Middlewares
+//? 1. Middleware
 // Middleware: can modify the incoming request data
 if (process.env.NODE_ENV === 'development') {
   app.use(morgan('dev'));
@@ -18,7 +17,7 @@ app.use(express.static(`${__dirname}/public`)); // if no route is specified sets
 
 // own middleware: needs to positioned before route handler in order to being used
 app.use((req, res, next) => {
-  console.log('Hello this is our own middleware 🐶🐶');
+  // console.log('Hello this is our own middleware 🐶🐶');
   next();
 });
 

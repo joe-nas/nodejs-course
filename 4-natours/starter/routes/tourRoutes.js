@@ -1,5 +1,5 @@
 const express = require('express');
-const tourController = require('./../controllers/tourController');
+const tourController = require('../controllers/tourController');
 // this router is in fact a middle-ware
 const router = express.Router();
 // param middleware runs only on a particular parameter - here id
