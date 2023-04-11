@@ -1,9 +1,16 @@
 const fs = require('fs');
 const express = require('express');
+const morgan = require('morgan');
 
 const app = express();
 
+//? Constants etc
+const db = `${__dirname}/dev-data/data/tours-simple.json`;
+const tours = JSON.parse(fs.readFileSync(db));
+
+//? 1. Middlewares
 // Middleware: can modify the incoming request data
+app.use(morgan('dev'));
 app.use(express.json()); // adds the request body to request object, would be undefined otherwise
 
 // own middleware: needs to positioned before route handler in order to being used
@@ -17,19 +24,7 @@ app.use((req, res, next) => {
   next();
 });
 
-const port = 3000;
-const db = `${__dirname}/dev-data/data/tours-simple.json`;
-
-//server
-app.listen(port, () => {
-  console.log(`App running on port ${port}!`);
-});
-
-// routing in express
-const tours = JSON.parse(fs.readFileSync(db));
-
-//* getting all tours
-//callback is called the route handler in express
+//? 2. Route handlers
 
 const getAllTours = (req, res) => {
   // using our own middleware
@@ -117,6 +112,8 @@ const deleteTour = (req, res) => {
   });
 };
 
+//? 3. Roures
+
 // app.get('/api/v1/tours', getAllTours);
 // app.get('/api/v1/tours/:id', getTour);
 // app.post('/api/v1/tours', createTour);
@@ -130,3 +127,9 @@ app
   .get(getTour)
   .patch(updateTour)
   .delete(deleteTour);
+
+//? 4. Start Server
+const port = 3000;
+app.listen(port, () => {
+  console.log(`App running on port ${port}!`);
+});
