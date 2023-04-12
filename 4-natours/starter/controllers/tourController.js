@@ -2,8 +2,18 @@ const Tour = require('../models/tourModel');
 
 exports.getAllTours = async (req, res) => {
   try {
-    const tours = await Tour.find(); // finds all if empty
+    // building the query
+    const queryObject = { ...req.query }; //create a copy
+    const excludedFields = ['page', 'sort', 'limit', 'fields'];
+    excludedFields.forEach((el) => delete queryObject[el]);
 
+    // query object can be chained with other query methods until it is awaited
+    const query = Tour.find(queryObject);
+
+    // executing the database query
+    const tours = await query;
+
+    // sending response to with queried data to  client
     res.status(200).json({
       status: 'success',
       requestedAt: req.requestTime,
@@ -54,7 +64,7 @@ exports.createTour = async (req, res) => {
   } catch (err) {
     res.status(404).json({
       status: 'fail',
-      message: 'Invalid data sent!',
+      message: err,
     });
   }
 };
