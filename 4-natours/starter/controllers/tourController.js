@@ -20,7 +20,7 @@ exports.getAllTours = async (req, res) => {
     // { difficulty: 'easy', page: '3', duration: { $gte: '5' } } expected mongoDB syntax
 
     // query object can be chained with other query methods until it is awaited
-    const query = Tour.find(queryObject);
+    let query = Tour.find(queryObject);
 
     // 2) Sorting: chain sort method to query object
     if (req.query.sort) {
@@ -30,6 +30,14 @@ exports.getAllTours = async (req, res) => {
       query.sort('-createdAt');
     }
 
+    // 3) Field limiting/ projecting
+    if (req.query.fields) {
+      const fields = req.query.fields.split(',').join(' ');
+      query = query.select(fields);
+    } else {
+      // excluding
+      query.select('-__v');
+    }
     // executing the database query
     const tours = await query;
 
