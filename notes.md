@@ -300,3 +300,11 @@ Param middleware runs is applied only to a specific route, e.g. `/:id`
 3. Flexible: No document data scheme required.
 4. Performant: Embedded data models, indexing, sharding, flexible documents, native duplication, etc.
 5. Free and open-source
+
+# What is Mongoose
+
+- Object Data Modeling ODM library for MongoDB and Node.js and provides a higher layer of abstraction.
+- Rapid and simple development of MongoDB database interactions
+- Features: schemas to model data and relationships, easy data validation, simple query API, middleware, etc.
+- **Mongoose schema**: where we model the data by describing the structure of the data, default values and validation.
+- **Mongoose model**: a wrapper for the schema, providing an interface to the database and CRUD operations.
