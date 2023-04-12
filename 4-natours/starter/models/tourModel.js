@@ -101,8 +101,15 @@ tourSchema.pre(/^find/, function (next) {
 });
 
 tourSchema.post(/^find/, function (docs, next) {
-  console.log(docs);
+  // console.log(docs);
   console.log(Date.now() - this.start);
+  next();
+});
+
+// AGGREGATION MIDDLEWARE
+tourSchema.pre('aggregate', function (next) {
+  this.pipeline().unshift({ $match: { secretTour: { $ne: true } } });
+  console.log(this.pipeline());
   next();
 });
 
