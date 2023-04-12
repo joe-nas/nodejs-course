@@ -308,3 +308,30 @@ Param middleware runs is applied only to a specific route, e.g. `/:id`
 - Features: schemas to model data and relationships, easy data validation, simple query API, middleware, etc.
 - **Mongoose schema**: where we model the data by describing the structure of the data, default values and validation.
 - **Mongoose model**: a wrapper for the schema, providing an interface to the database and CRUD operations.
+
+# MVC architecture
+
+- Model View Controller, decouple code, separate application from business logic, easier to maintain
+
+- Model: Business Logic
+
+  - Code that solves the business problem we set to solve.
+  - Directly related to business rules, how the business works and what the business needs.
+  - Examples:
+    - creating new tours in DB
+    - password validation
+    - validation of user input data
+    - only users who bought a tour can review it
+
+- Controller: Application logic
+
+  - Concerned about applications implementation, not the problem the business is truing to solve (in our demo, showing and selling tours)
+  - Handle request, models, sending back responses to the client.
+  - Bridge between model and view layers
+  - Technical aspects of the application
+
+- View: Presentation Logic
+
+  - Front end, graphical interface
+
+**Fat models/thin controllers**: try to offload as much logic as possible into the models, and keep the controllers as simple and lean as possible.
