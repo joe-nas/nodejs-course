@@ -8,6 +8,10 @@ const router = express.Router();
 // specify route and router in middleware.
 // Mounting the router, mounting a router on a route
 router
+  .route('/top-5-tours')
+  .get(tourController.aliasTopTours, tourController.getAllTours);
+
+router
   .route('/')
   .get(tourController.getAllTours)
   .post(tourController.createTour);
