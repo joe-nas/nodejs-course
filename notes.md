@@ -259,7 +259,7 @@ But there are other standards for formatting data JSOPN:API, OData JSON Protocol
 
 5.  Be stateless
 
-- **Stateless RESTful API:** A;; state is handled **on the client**. Meaning each request must contain **all** the information necessary to process a certain request. The server should **not** have to remember previous requests.
+- **Stateless RESTful API:** The state is handled **on the client**. Meaning each request must contain **all** the information necessary to process a certain request. The server should **not** have to remember previous requests.
 
 - Examples of state `loggedIn, currentPage`
 
@@ -267,9 +267,9 @@ But there are other standards for formatting data JSOPN:API, OData JSON Protocol
 
 1. On a request to the app server a request and response object is created
 2. From the initial request **middleware** can modify request and response objects until the response is sent (.send()).
-   - we used req.json() to get access to the request body on the req obj.
-   - in express "Everything is middleware" even routers.
-   - all middleware we use in the app is called the middleware stack.
+   - We used req.json() to get access to the request body on the req obj.
+   - In express "Everything is middleware" even routers.
+   - All middleware we use in the app is called the middleware stack.
 
 the request response cycle:
 `incoming request --> middleware(req,res) --> response`
@@ -277,3 +277,26 @@ the request response cycle:
 ## There is param middleware
 
 Param middleware runs is applied only to a specific route, e.g. `/:id`
+
+# MongoDB
+
+- NoSQL instead of relational DB systems
+- in MongoDB there are **collections** (tables) and **documents** (rows)
+
+  - collections would contain: `blog, users, reviews`
+  - documents would contain: `post, user, review`
+
+## key features:
+
+1. Document based: field-value pair data structure.
+
+   - MongoDB uses BSON which is similar to JSON but uses typed values.
+   - Embedding/Denormalizing: including related data into a single document. Allowing for quicker access and easier data models (not always the best solution).
+     - In relational databases data is always normalized
+     - Embeddings are not possible hence two tables are usually joined on a common identifier.
+   - Each document automatically comes with a unique ID
+
+2. Scalability: easy to distribute across multiple machines.
+3. Flexible: No document data scheme required.
+4. Performant: Embedded data models, indexing, sharding, flexible documents, native duplication, etc.
+5. Free and open-source
