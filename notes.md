@@ -335,3 +335,27 @@ Param middleware runs is applied only to a specific route, e.g. `/:id`
   - Front end, graphical interface
 
 **Fat models/thin controllers**: try to offload as much logic as possible into the models, and keep the controllers as simple and lean as possible.
+
+# Error Handling:
+
+## 1. Operational Errors
+
+Problems we can predict will happen:
+
+- Invalid path accessed (express routing)
+- Invalid user input (validation error from mongoose)
+- Failed to connect to server
+- Request timeout
+- etc
+
+**With Express we can write a global error handling middleware to handle all a lot of operational errors**
+
+## 2. Programming Errors
+
+Bugs developers introduce into the code. Difficult to find and handle.
+
+- Reading properties on undefined
+- Passing a number where object is expected
+- Using await without async
+- using req.query instead of req.body
+- etc
