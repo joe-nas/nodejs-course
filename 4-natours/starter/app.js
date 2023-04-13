@@ -15,12 +15,6 @@ app.use(express.static(`${__dirname}/public`)); // if no route is specified sets
 // specify route and router in middleware.
 // Mounting the router, mounting a router on a route
 
-// own middleware: needs to positioned before route handler in order to being used
-app.use((req, res, next) => {
-  // console.log('Hello this is our own middleware 🐶🐶');
-  next();
-});
-
 app.use((req, res, next) => {
   req.requestTime = new Date().toISOString();
   next();
@@ -28,6 +22,12 @@ app.use((req, res, next) => {
 
 app.use('/api/v1/tours', tourRouter);
 app.use('/api/v1/users', userRouter);
+app.all('*', (req, res, next) => {
+  res.status(404).json({
+    status: 'fail',
+    message: `Can't find ${req.originalUrl} on this server!`,
+  });
+});
 
 // ? 4. Start Server
 // const port = 3000;
