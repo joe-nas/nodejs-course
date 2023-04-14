@@ -359,3 +359,15 @@ Bugs developers introduce into the code. Difficult to find and handle.
 - Using await without async
 - using req.query instead of req.body
 - etc
+
+# How JSON Web Token (JWT) Authentication works
+
+1. A user logs in using a POST request to the server.
+2. Server checks if user exists and password is correct.
+3. Using a secret, the server creates a JWT and sends it to the client.
+4. Client stores JWT as cookie or in localStorage.
+
+5. For accessing protected routes. The client sends its JWT with a GET request.
+6. Server validates JWT and sends a response accordingly.
+
+**all of this must happen over https**
