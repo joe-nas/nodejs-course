@@ -23,6 +23,7 @@ const userSchema = new mongoose.Schema({
     type: String,
     required: [true, 'A user account must have a password!'],
     minlength: [8, 'A password must have at least 8 letters!'],
+    select: false, // will be returned to user
   },
   passwordConfirm: {
     type: String,
@@ -48,6 +49,15 @@ userSchema.pre('save', async function (next) {
   this.passwordConfirm = undefined;
   next();
 });
+
+// Instance method
+userSchema.methods.correctPassword = async function (
+  candidatePassword,
+  userPassword
+) {
+  // this.password not available because of select: false, hence we have to pass in userPassword
+  return await bcrypt.compare(candidatePassword, userPassword);
+};
 
 const User = mongoose.model('User', userSchema);
 

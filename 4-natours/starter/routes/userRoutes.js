@@ -9,6 +9,7 @@ const router = express.Router();
 // specify route and router in middleware.
 // Mounting the router, mounting a router on a route
 router.post('/signup', authController.signup);
+router.post('/login', authController.login);
 
 router
   .route('/')
