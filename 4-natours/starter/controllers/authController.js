@@ -20,6 +20,7 @@ exports.signup = catchAsync(async (req, res, next) => {
     password: req.body.password,
     passwordConfirm: req.body.passwordConfirm,
     passwordChangedAt: req.body.passwordChangedAt,
+    role: req.body.role,
   });
 
   const token = signToken(newUser._id);
@@ -90,7 +91,23 @@ exports.protect = catchAsync(async (req, res, next) => {
       new AppError('User changed password! Please login again.', 401)
     );
   }
-  // Grant access to protected route
+  // Grant access to protected route.
+  // here also the role of the current is stored
   req.user = currentUser;
   next();
 });
+
+exports.restrictTo = (...roles) => {
+  return (req, res, next) => {
+    // roles is an array e.g. ['admin' , 'lead-guide']
+
+    // we get the role of the current user from the middleware before restrictTo.
+    // in protect
+    if (!roles.includes(req.user.role)) {
+      return next(
+        new AppError('You do not have permission to perform this action!', 403) // forbidden
+      );
+    }
+    next();
+  };
+};
