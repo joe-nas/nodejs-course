@@ -10,6 +10,8 @@ const router = express.Router();
 // Mounting the router, mounting a router on a route
 router.post('/signup', authController.signup);
 router.post('/login', authController.login);
+router.post('/forgotPassword', authController.forgotPassword);
+// router.post('/resetPassword', authController.resetPassword);
 
 router
   .route('/')
