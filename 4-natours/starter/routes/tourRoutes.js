@@ -1,5 +1,7 @@
 const express = require('express');
 const tourController = require('../controllers/tourController');
+const authController = require('../controllers/authController');
+
 // this router is in fact a middle-ware
 const router = express.Router();
 // param middleware runs only on a particular parameter - here id
@@ -16,7 +18,7 @@ router.route('/monthly-plan/:year').get(tourController.getMonthlyPlan);
 
 router
   .route('/')
-  .get(tourController.getAllTours)
+  .get(authController.protect, tourController.getAllTours)
   .post(tourController.createTour);
 router
   .route('/:id')
