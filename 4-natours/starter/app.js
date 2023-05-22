@@ -1,6 +1,6 @@
 const express = require('express');
 const morgan = require('morgan');
-const chalk = require('chalk');
+// const chalk = require('chalk');
 
 const AppError = require('./utils/appError');
 const globalErrorHandler = require('./controllers/errorController');
